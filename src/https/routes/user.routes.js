@@ -3,12 +3,19 @@ import { getAllUserController } from "../controllers/User/getAllUser.controller.
 import { getUserByIdController } from "../controllers/User/getUserById.controller.js";
 import { updateUserController } from "../controllers/User/updateUser.controller.js";
 import { removeUserController } from "../controllers/User/removeUser.controller.js";
+import { authenticate } from "../../middleware/authentication.js";
+import { checkPermission } from "../../middleware/permission.js";
 
 const router = express.Router();
 
-router.get("/", getAllUserController);
-router.get("/:userId", getUserByIdController);
-router.put("/update/:userId", updateUserController);
-router.delete("/remove/:userId", removeUserController);
+router.get("/", authenticate, checkPermission, getAllUserController);
+router.get("/:userId", authenticate, checkPermission, getUserByIdController);
+router.put("/update/:userId", authenticate, updateUserController);
+router.delete(
+  "/remove/:userId",
+  authenticate,
+  checkPermission,
+  removeUserController
+);
 
 export default router;
