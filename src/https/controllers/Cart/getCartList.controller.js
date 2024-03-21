@@ -2,7 +2,7 @@ import Joi from "joi";
 import { getCartList } from "../../services/cart.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(params) {
+async function validate(userId, page, limit) {
   try {
     const schema = Joi.object({
       userId: Joi.number().required(),
@@ -10,7 +10,7 @@ async function validate(params) {
       limit: Joi.number().required(),
     });
 
-    return await schema.validateAsync(params);
+    return await schema.validateAsync({ userId, page, limit });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
