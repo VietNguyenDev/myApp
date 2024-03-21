@@ -8,7 +8,7 @@ async function validate(categoryId) {
       categoryId: Joi.number().required(),
     });
 
-    return await schema.validateAsync(categoryId);
+    return await schema.validateAsync({ categoryId: categoryId });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }

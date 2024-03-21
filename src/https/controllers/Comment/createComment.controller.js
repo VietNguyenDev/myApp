@@ -5,13 +5,15 @@ import { abort } from "../../../helper/abort.js";
 async function validate(params) {
   try {
     const schema = Joi.object({
-      userId: Joi.number().required(),
-      productId: Joi.number().required(),
-      comment: Joi.string().required(),
-      rating: Joi.number().required(),
+      params: Joi.object({
+        userId: Joi.number().required(),
+        productId: Joi.number().required(),
+        comment: Joi.string().required(),
+        rating: Joi.number().required(),
+      }),
     });
 
-    return await schema.validateAsync(params);
+    return await schema.validateAsync({ params: params });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }

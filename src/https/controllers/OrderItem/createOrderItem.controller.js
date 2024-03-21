@@ -6,11 +6,13 @@ async function validate(cartId, params) {
   try {
     const schema = Joi.object({
       cartId: Joi.number().required(),
-      productId: Joi.number().required(),
-      quantity: Joi.number().required(),
+      params: Joi.object({
+        productId: Joi.number().required(),
+        quantity: Joi.number().required(),
+      }),
     });
 
-    return await schema.validateAsync(cartId, params);
+    return await schema.validateAsync({ cartId: cartId, params: params });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
@@ -18,8 +20,8 @@ async function validate(cartId, params) {
 
 export async function createOrderItemController(req, res) {
   try {
-    const cartId = req.params;
-    const params = req.body;
+    const { cartId } = req.params;
+    const { params } = req.body;
 
     await validate(cartId, params);
     const orderItem = await createOrderItem(cartId, params);

@@ -9,7 +9,7 @@ async function validate(userId, productId) {
       productId: Joi.number().required(),
     });
 
-    return await schema.validateAsync(userId, productId);
+    return await schema.validateAsync({ userId: userId, productId: productId });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
