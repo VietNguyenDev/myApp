@@ -2,10 +2,10 @@ import Joi from "joi";
 import { getList } from "../../services/products.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(limits, page) {
+async function validate({ limits, page }) {
   try {
     const schema = Joi.object({
-      limits: Joi.number().required(),
+      limits: Joi.number().required().min(1),
       page: Joi.number().required(),
     });
 
