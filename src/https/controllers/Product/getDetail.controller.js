@@ -2,13 +2,13 @@ import Joi from "joi";
 import { getDetail } from "../../services/products.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(productId) {
+async function validate({ productId }) {
   try {
     const schema = Joi.object({
       productId: Joi.number().required(),
     });
 
-    return await schema.validateAsync(productId);
+    return await schema.validateAsync({ productId });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }

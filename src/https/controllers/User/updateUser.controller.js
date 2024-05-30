@@ -6,15 +6,17 @@ async function validate(userId, params) {
   try {
     const schema = Joi.object({
       userId: Joi.number().required(),
-      username: Joi.string().required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-      fullName: Joi.string().required(),
-      dateOfBirth: Joi.date().required(),
-      avatar: Joi.string().required(),
-      phone: Joi.string().required(),
-      address: Joi.string().required(),
-      gender: Joi.string().required(),
+      params: Joi.object({
+        username: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required(),
+        fullName: Joi.string().required(),
+        dateOfBirth: Joi.date().required(),
+        avatar: Joi.string().required(),
+        phone: Joi.string().required(),
+        address: Joi.string().required(),
+        gender: Joi.string().required(),
+      }),
     });
 
     return await schema.validateAsync({ userId, params });
