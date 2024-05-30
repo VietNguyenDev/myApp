@@ -33,7 +33,7 @@ export async function getList({ limits, page }) {
   }
 }
 
-export async function create(params) {
+export async function create({ params }) {
   try {
     const isExistProduct = await db.models.Product.findOne({
       where: {
@@ -86,7 +86,6 @@ export async function update(productId, params) {
         },
       }
     );
-    console.log("🚀 ~ update ~ ata:", data);
 
     return "update success";
   } catch (error) {

@@ -26,8 +26,16 @@ export async function createController(req, res) {
     const params = req.body;
     await validate(params);
 
-    const product = await create(params);
+    const product = await create({
+      ...params,
+    });
 
+    if (data) {
+      return res.status(200).send({
+        message: "Create product success",
+        data,
+      });
+    }
     return res.status(200).json(product);
   } catch (error) {
     return abort(400, error);
