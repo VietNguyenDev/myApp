@@ -8,7 +8,7 @@ async function validate(categoryName) {
       categoryName: Joi.string().required(),
     });
 
-    return await schema.validateAsync(categoryName);
+    return await schema.validateAsync({ categoryName });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
@@ -16,7 +16,7 @@ async function validate(categoryName) {
 
 export async function createCategoryController(req, res) {
   try {
-    const categoryName = req.body;
+    const { categoryName } = req.body;
     await validate(categoryName);
 
     const category = await createCategory(categoryName);
