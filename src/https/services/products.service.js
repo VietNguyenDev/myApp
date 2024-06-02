@@ -33,7 +33,7 @@ export async function getList({ limits, page }) {
   }
 }
 
-export async function create({ params }) {
+export async function create({ params, productImg }) {
   try {
     const isExistProduct = await db.models.Product.findOne({
       where: {
@@ -50,7 +50,7 @@ export async function create({ params }) {
       productDescription: params.productDescription,
       sellingPrice: params.sellingPrice,
       discount: params.discount,
-      productImage: params.productImage,
+      productImage: productImg,
       productQuantity: params.productQuantity,
       productSize: params.productSize,
       categoryId: params.categoryId,

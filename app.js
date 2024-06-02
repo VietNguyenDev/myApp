@@ -23,8 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const upload = multer();
-app.use(upload.array());
-
 //all routes
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);

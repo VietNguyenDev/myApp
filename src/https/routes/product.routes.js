@@ -6,16 +6,24 @@ import { updateController } from "../controllers/Product/updateProduct.controlle
 import { removeController } from "../controllers/Product/deleteProduct.controller.js";
 import { authenticate } from "../../middleware/authentication.js";
 import { checkPermission } from "../../middleware/permission.js";
+import { upload } from "../../middleware/uploadImg.js";
 
 const router = express.Router();
 
 router.get("/getList", getListController);
 router.get("/getDetail/:productId", getDetailController);
-router.post("/create", authenticate, checkPermission, createController);
+router.post(
+  "/create",
+  authenticate,
+  checkPermission,
+  upload.single("file"),
+  createController
+);
 router.put(
   "/update/:productId",
   authenticate,
   checkPermission,
+  upload.single("file"),
   updateController
 );
 router.delete(

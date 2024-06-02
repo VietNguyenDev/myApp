@@ -11,7 +11,7 @@ async function checkAuth(req) {
 
   const payload = await verifyToken(token);
 
-  if (!payload === false) return false;
+  if (payload === false) return false;
   const user = await db.models.User.findOne({ where: { id: payload.id } });
 
   if (!user) return false;

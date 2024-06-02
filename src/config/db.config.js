@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const databaseConfig = {
   HOST: "localhost",
-  USER: "root",
-  PASSWORD: "Nguyenviet2510",
-  DB: "ecommerce",
+  USER: process.env.DB_USER,
+  PASSWORD: process.env.DB_PWD,
+  DB: process.env.DB_NAME,
   dialect: "mysql",
 };
 
