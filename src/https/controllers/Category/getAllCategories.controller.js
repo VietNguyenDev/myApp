@@ -18,6 +18,11 @@ async function validate({ limits, page }) {
 export async function getAllCategoriesController(req, res) {
   try {
     const { limits, page } = req.query;
+    console.log(
+      "🚀 ~ getAllCategoriesController ~ limits, page :",
+      limits,
+      page
+    );
     await validate({ limits, page });
 
     const categories = await getAllCategories({ limits, page });

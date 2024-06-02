@@ -9,7 +9,7 @@ async function validate(limit, page) {
       page: Joi.number().required(),
     });
 
-    return await schema.validateAsync(limit, page);
+    return await schema.validateAsync({ limit: limit, page: page });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }

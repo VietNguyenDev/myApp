@@ -18,7 +18,6 @@ async function validate({ productId, params, productImg }) {
       productId: Joi.number().required(),
       productImg: Joi.string().required(),
     });
-
     return await schema.validateAsync({ productId, params, productImg });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);

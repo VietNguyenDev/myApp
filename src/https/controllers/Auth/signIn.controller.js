@@ -11,7 +11,7 @@ async function validate(params) {
       username: Joi.string().required(),
     });
 
-    return await schema.validateAsync(params);
+    return await schema.validateAsync({ params });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
@@ -19,7 +19,7 @@ async function validate(params) {
 
 export async function signInController(req, res) {
   try {
-    const params = req.body;
+    const { params } = req.body;
     await validate(params);
 
     const data = await signIn(params);

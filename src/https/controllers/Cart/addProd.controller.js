@@ -5,14 +5,16 @@ import { abort } from "../../../helper/abort.js";
 async function validate(params) {
   try {
     const schema = Joi.object({
-      userId: Joi.number().required(),
-      productId: Joi.number().required(),
-      quantity: Joi.number().required(),
-      productColor: Joi.string().required(),
-      productSize: Joi.string().required(),
+      params: Joi.object({
+        userId: Joi.number().required(),
+        productId: Joi.number().required(),
+        quantity: Joi.number().required(),
+        productColor: Joi.string().required(),
+        productSize: Joi.string().required(),
+      }),
     });
 
-    return await schema.validateAsync(params);
+    return await schema.validateAsync({ params });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
@@ -20,7 +22,7 @@ async function validate(params) {
 
 export async function addProdController(req, res) {
   try {
-    const params = req.body;
+    const { params } = req.body;
     await validate(params);
 
     const cart = await addProdToCart(params);
