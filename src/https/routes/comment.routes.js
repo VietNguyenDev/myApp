@@ -7,7 +7,7 @@ import { authenticate } from "../../middleware/authentication.js";
 
 const router = express.Router();
 
-router.get("/getAll", getAllCommentController);
+router.get("/getAll/:productId", getAllCommentController);
 router.post("/create", authenticate, createCommentController);
 router.put("/update/:commentId", authenticate, updateCommentController);
 router.delete("/delete/:commentId", authenticate, deleteCommentController);

@@ -2,7 +2,7 @@ import Joi from "joi";
 import { getAllUsers } from "../../services/users.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(limits, page) {
+async function validate({ limits, page }) {
   try {
     const schema = Joi.object({
       limits: Joi.number().required(),
@@ -17,7 +17,8 @@ async function validate(limits, page) {
 
 export async function getAllUserController(req, res) {
   try {
-    const { limits, page } = req.params;
+    const { limits, page } = req.query;
+
     await validate({ limits, page });
     const users = await getAllUsers({ limits, page });
 

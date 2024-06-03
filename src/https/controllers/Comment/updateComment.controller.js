@@ -2,7 +2,7 @@ import Joi from "joi";
 import { updateComment } from "../../services/comment.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(commentId, content) {
+async function validate({ commentId, content }) {
   try {
     const schema = Joi.object({
       commentId: Joi.number().required(),
@@ -18,9 +18,9 @@ async function validate(commentId, content) {
 export async function updateCommentController(req, res) {
   try {
     const { commentId } = req.params;
-    const content = req.body;
+    const { content } = req.body;
 
-    await validate(commentId, content);
+    await validate({ commentId, content });
     const comment = await updateComment(commentId, content);
     res.status(200).json(comment);
   } catch (error) {

@@ -26,7 +26,7 @@ async function validate(userId, params) {
 export async function updateUserController(req, res) {
   try {
     const { params } = req.body;
-    const { userId } = req.params;
+    const { userId } = req.query;
     await validate(userId, params);
     const user = await updateUser(userId, params);
 

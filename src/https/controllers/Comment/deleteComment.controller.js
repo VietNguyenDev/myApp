@@ -8,7 +8,7 @@ async function validate(commentId) {
       commentId: Joi.number().required(),
     });
 
-    return await schema.validateAsync(commentId);
+    return await schema.validateAsync({ commentId });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
