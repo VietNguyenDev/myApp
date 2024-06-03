@@ -6,10 +6,15 @@ async function validate(categoryId, params) {
   try {
     const schema = Joi.object({
       categoryId: Joi.number().required(),
-      categoryName: Joi.string().required(),
+      params: Joi.object({
+        categoryName: Joi.string().required(),
+      }),
     });
 
-    return await schema.validateAsync(categoryId, params);
+    return await schema.validateAsync({
+      categoryId: categoryId,
+      params: params,
+    });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }

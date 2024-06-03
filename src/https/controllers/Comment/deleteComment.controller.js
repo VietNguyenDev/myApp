@@ -2,7 +2,7 @@ import Joi from "joi";
 import { deleteComment } from "../../services/comment.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(commentId) {
+async function validate({ commentId }) {
   try {
     const schema = Joi.object({
       commentId: Joi.number().required(),
@@ -17,7 +17,7 @@ async function validate(commentId) {
 export async function deleteCommentController(req, res) {
   try {
     const { commentId } = req.params;
-    await validate(commentId);
+    await validate({ commentId });
     const comment = await deleteComment(commentId);
     res.status(200).json(comment);
   } catch (error) {
