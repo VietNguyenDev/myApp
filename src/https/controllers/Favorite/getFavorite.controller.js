@@ -2,7 +2,7 @@ import Joi from "joi";
 import { getAllFavorite } from "../../services/favorite.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(limit, page) {
+async function validate({ limit, page }) {
   try {
     const schema = Joi.object({
       limit: Joi.number().required(),
@@ -18,7 +18,7 @@ async function validate(limit, page) {
 export async function getAllFavoriteController(req, res) {
   try {
     const { limit, page } = req.query;
-    await validate(limit, page);
+    await validate({ limit, page });
 
     const favorites = await getAllFavorite({ limit, page });
     return res.status(200).json(favorites);

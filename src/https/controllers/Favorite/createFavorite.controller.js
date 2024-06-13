@@ -2,7 +2,7 @@ import Joi from "joi";
 import { createFavoriteProd } from "../../services/favorite.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(params) {
+async function validate({ params }) {
   try {
     const schema = Joi.object({
       params: Joi.object({
@@ -11,7 +11,7 @@ async function validate(params) {
       }),
     });
 
-    return await schema.validateAsync({ params: params });
+    return await schema.validateAsync({ params });
   } catch (error) {
     return abort(500, "Validate error: " + error.message);
   }
@@ -19,8 +19,8 @@ async function validate(params) {
 
 export async function createFavoriteController(req, res) {
   try {
-    const { params } = req.body;
-    await validate(params);
+    const params = req.body;
+    await validate({ params });
     const favorite = await createFavoriteProd(params);
     return res.status(201).json(favorite);
   } catch (error) {

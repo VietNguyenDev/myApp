@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.post("/create", authenticate, createFavoriteController);
 router.get("/getList", authenticate, getAllFavoriteController);
-router.delete("/delete", authenticate, deleteFavoriteProdController);
+router.delete("/delete/:id", authenticate, deleteFavoriteProdController);
 
 export default router;
