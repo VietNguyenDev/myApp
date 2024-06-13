@@ -2,7 +2,7 @@ import Joi from "joi";
 import { getCartList } from "../../services/cart.service.js";
 import { abort } from "../../../helper/abort.js";
 
-async function validate(userId, page, limit) {
+async function validate({ userId, page, limit }) {
   try {
     const schema = Joi.object({
       userId: Joi.number().required(),

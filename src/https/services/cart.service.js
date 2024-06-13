@@ -8,8 +8,11 @@ export async function addProdToCart(params) {
       return abort(404, "Product not found");
     }
 
+    const subTotal = product.price * params.quantity;
+
     const cart = await db.models.Cart.create({
       ...params,
+      subTotal,
     });
     return cart;
   } catch (error) {
@@ -20,12 +23,13 @@ export async function addProdToCart(params) {
 export async function getCartList(userId, limit, page) {
   try {
     const offset = (page - 1) * limit;
+    const limits = parseInt(limit);
 
     const cart = await db.models.Cart.findAll({
       where: {
         userId,
       },
-      limit,
+      limits,
       offset,
     });
     return cart;
@@ -34,7 +38,7 @@ export async function getCartList(userId, limit, page) {
   }
 }
 
-export async function deleteProdFromCart(userId, productId) {
+export async function deleteProdFromCart({ userId, productId, id }) {
   try {
     const product = await db.models.Cart.findOne({
       where: {
@@ -49,7 +53,7 @@ export async function deleteProdFromCart(userId, productId) {
 
     await db.models.Cart.destroy({
       where: {
-        id: cartId,
+        id: id,
       },
     });
 

@@ -22,7 +22,7 @@ async function validate(params) {
 
 export async function addProdController(req, res) {
   try {
-    const { params } = req.body;
+    const params = req.body;
     await validate(params);
 
     const cart = await addProdToCart(params);
