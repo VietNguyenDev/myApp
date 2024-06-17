@@ -1,19 +1,21 @@
-import db from "../../models/db.js";
+import db from "../../models/index.js";
 import { abort } from "../../helper/abort.js";
 
-export async function createOrderItem(cartId, params) {
+export async function createOrderItem(params) {
   try {
-    const cart = await db.Cart.findByPk(cartId);
-
-    if (!cart) {
-      return abort(404, "Cart not found");
+    const product = await db.models.Product.findByPk(params.productId);
+    if (!product) {
+      return abort(404, "Product not found");
     }
+    const subTotal =
+      params.quantity * product.sellingPrice * (1 - product.discount / 100);
 
-    const OrderItem = await db.OrderItem.create({
+    const OrderItem = await db.models.OrderItem.create({
       productId: params.productId,
       quantity: params.quantity,
       productColor: params.productColor,
       productSize: params.productSize,
+      subTotal: subTotal,
     });
 
     return OrderItem;
@@ -22,9 +24,19 @@ export async function createOrderItem(cartId, params) {
   }
 }
 
+export async function getAllOrderItem() {
+  try {
+    const orderItems = await db.models.OrderItem.findAll();
+
+    return orderItems;
+  } catch (error) {
+    return abort(500, error.message);
+  }
+}
+
 export async function getOrderItem(id) {
   try {
-    const orderItem = await db.OrderItem.findByPk(id);
+    const orderItem = await db.models.OrderItem.findByPk(id);
 
     if (!orderItem) {
       return abort(404, "Order item not found");
@@ -44,14 +56,14 @@ export async function updateOrderItem(id, params) {
       return abort(404, "Order item not found");
     }
 
-    const data = await db.OrderItem.update(
+    const product = await db.models.Product.findByPk(params.productId);
+    const data = await db.models.OrderItem.update(
       {
-        productId: params.productId,
         quantity: params.quantity,
         productColor: params.productColor,
         productSize: params.productSize,
         subTotal:
-          quantity * db.Product.sellingPrice * (db.Product.discount / 100),
+          params.quantity * product.sellingPrice * (1 - product.discount / 100),
       },
       {
         where: {
@@ -74,7 +86,12 @@ export async function removeOrderItem(id) {
       return abort(404, "Order item not found");
     }
 
-    await orderItem.destroy();
+    await db.models.OrderItem.destroy({
+      where: {
+        id: id,
+      },
+    });
+    return "delete success";
   } catch (error) {
     return abort(500, error.message);
   }

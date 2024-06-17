@@ -3,12 +3,14 @@ import { updateOrderItem } from "../../services/orderItem.service.js";
 import { abort } from "../../../helper/abort.js";
 
 async function validate(id, params) {
+  console.log("🚀 ~ validate ~ params:", params);
   try {
     const schema = Joi.object({
       id: Joi.number().required(),
       params: Joi.object({
-        cartId: Joi.number().required(),
         productId: Joi.number().required(),
+        productColor: Joi.string().required(),
+        productSize: Joi.string().required(),
         quantity: Joi.number().required(),
       }),
     });
@@ -22,7 +24,7 @@ async function validate(id, params) {
 export async function updateOrderItemController(req, res) {
   try {
     const { id } = req.params;
-    const { params } = req.body;
+    const params = req.body;
     await validate(id, params);
 
     const orderItem = await updateOrderItem(id, params);

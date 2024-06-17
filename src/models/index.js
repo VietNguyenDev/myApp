@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import sequelize from "./db.js";
-import Cart from "./cart.model.js";
 import Category from "./categories.model.js";
 import Comment from "./comments.model.js";
 import Favorite from "./favorite.model.js";
@@ -16,7 +15,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.models = {};
-db.models.Cart = Cart;
 db.models.Category = Category;
 db.models.Comment = Comment;
 db.models.Favorite = Favorite;

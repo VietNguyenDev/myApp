@@ -22,6 +22,10 @@ const OrderDetail = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    orderItemId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
@@ -49,9 +53,9 @@ OrderDetail.associate = (models) => {
     as: "shipping",
   });
 
-  OrderDetail.belongsTo(models.OrderDetail, {
-    foreignKey: "orderId",
-    as: "order_item",
+  OrderDetail.belongsTo(models.OrderItem, {
+    foreignKey: "orderItemId",
+    as: "OrderItem",
   });
 };
 export default OrderDetail;
