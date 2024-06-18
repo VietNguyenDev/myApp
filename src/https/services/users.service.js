@@ -28,7 +28,7 @@ export async function getUserById(userId) {
   }
 }
 
-export async function updateUser(userId, params) {
+export async function updateUser({ userId, params, avatar }) {
   try {
     const user = await getUserById(userId);
 
@@ -38,13 +38,12 @@ export async function updateUser(userId, params) {
 
     const data = await db.models.User.update(
       {
-        email: params.email,
-        password: params.password,
         fullName: params.fullName,
         address: params.address,
         phone: params.phone,
-        avatar: params.avatar,
+        avatar: avatar,
         roleId: params.roleId,
+        dateOfBirth: params.dateOfBirth,
       },
       {
         where: {

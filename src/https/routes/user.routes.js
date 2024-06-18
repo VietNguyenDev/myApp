@@ -5,12 +5,18 @@ import { updateUserController } from "../controllers/User/updateUser.controller.
 import { removeUserController } from "../controllers/User/removeUser.controller.js";
 import { authenticate } from "../../middleware/authentication.js";
 import { checkPermission } from "../../middleware/permission.js";
+import { upload } from "../../middleware/uploadImg.js";
 
 const router = express.Router();
 
 router.get("/", authenticate, checkPermission, getAllUserController);
 router.get("/:userId", authenticate, checkPermission, getUserByIdController);
-router.put("/update/:userId", authenticate, updateUserController);
+router.put(
+  "/update/:userId",
+  authenticate,
+  upload.single("file"),
+  updateUserController
+);
 router.delete(
   "/remove/:userId",
   authenticate,
