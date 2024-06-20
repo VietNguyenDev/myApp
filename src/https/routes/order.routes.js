@@ -5,7 +5,7 @@ import { authenticate } from "../../middleware/authentication.js";
 
 const router = express.Router();
 
-router.post("/order", authenticate, createOrderDetailController);
-router.get("/order/:id", authenticate, getOrderDetailByIdController);
+router.post("/createOrder", authenticate, createOrderDetailController);
+router.get("/getOrder/:id", authenticate, getOrderDetailByIdController);
 
 export default router;

@@ -8,6 +8,7 @@ import OrderItem from "./orderItem.model.js";
 import Product from "./products.model.js";
 import ShippingDetail from "./shippingDetail.model.js";
 import User from "./users.model.js";
+import Payment from "./payment.model.js";
 
 const db = {};
 
@@ -23,6 +24,7 @@ db.models.OrderDetail = OrderDetail;
 db.models.Product = Product;
 db.models.ShippingDetail = ShippingDetail;
 db.models.User = User;
+db.models.Payment = Payment;
 
 //connect to db
 try {

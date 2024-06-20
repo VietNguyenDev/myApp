@@ -1,14 +1,18 @@
 import db from "../../models/index.js";
 import { abort } from "../../helper/abort.js";
 
-export async function createOrderDetail(params) {
+export async function createOrderDetail({ params }) {
   try {
     const OrderItem = await db.models.OrderItem.findAll();
     const total = OrderItem.reduce((acc, item) => {
-      return acc + item.price;
+      return acc + item.subTotal;
     }, 0);
-    const orderDetail = await db.OrderDetail.create({
+    console.log("🚀 ~ total ~ total:", total);
+
+    const orderDetail = await db.models.OrderDetail.create({
       shippingId: params.shippingId,
+      userId: params.userId,
+      orderItemId: params.orderItemId,
       total: total,
     });
 
@@ -32,14 +36,14 @@ export async function getOrderDetailById(id) {
       attributes: ["orderItemId"],
     });
 
-    const orderItem = [];
+    const items = [];
 
     for (const item of orderItems) {
       const orderItem = await db.models.OrderItem.findByPk(item.orderItemId);
-      orderItem.push(orderItem);
+      items.push(orderItem);
     }
 
-    return orderItem;
+    return items;
   } catch (error) {
     return abort(500, error.message);
   }

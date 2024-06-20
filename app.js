@@ -13,6 +13,7 @@ import OrderItem from "./src/https/routes/orderItem.routes.js";
 import authRoutes from "./src/https/routes/auth.routes.js";
 import orderRoutes from "./src/https/routes/order.routes.js";
 import shippingRoutes from "./src/https/routes/shipping.routes.js";
+import paymentRoutes from "./src/https/routes/payment.routes.js";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api/orderItem", OrderItem);
 app.use("/api/auth", authRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/shipping", shippingRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);
